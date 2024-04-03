@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1007302827188",
+    "project_id": "product-list-test-99210",
+    "storage_bucket": "product-list-test-99210.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007302827188:android:0783448e6ec281e8558be1",
+        "android_client_info": {
+          "package_name": "com.example.firesbase_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCchvu4jWRyLMzEo3wV2B-9tztHdy5_rr0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
