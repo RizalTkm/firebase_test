@@ -18,10 +18,10 @@ class ProductDetailsEntity {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['productname'] = this.productname;
-    data['measurement'] = this.measurement;
-    data['price'] = this.price;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productname'] = productname;
+    data['measurement'] = measurement;
+    data['price'] = price;
     return data;
   }
 

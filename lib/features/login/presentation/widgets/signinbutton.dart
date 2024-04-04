@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignInButton extends StatelessWidget {
@@ -14,6 +13,6 @@ class SignInButton extends StatelessWidget {
         width: 100,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), ),
-        child: ElevatedButton(onPressed: onpressed, child: Text(label),style: ElevatedButton.styleFrom(backgroundColor: Colors.red),));
+        child: ElevatedButton(onPressed: onpressed,style: ElevatedButton.styleFrom(backgroundColor: Colors.red), child: Text(label),));
   }
 }

@@ -5,7 +5,7 @@ class LoginEntity extends Equatable {
   final String? password;
   final String? uid;
 
-  LoginEntity({this.username, this.password,this.uid});
+  const LoginEntity({this.username, this.password,this.uid});
 
   @override
 
