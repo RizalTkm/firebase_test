@@ -1,5 +1,6 @@
 // lib/login_form.dart
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:firesbase_test/config/routes/routenames.dart';
 import 'package:firesbase_test/features/login/domain/entities/login_entity.dart';
 import 'package:firesbase_test/features/login/presentation/bloc/auth/cubit/auth_cubit.dart';
@@ -83,7 +84,7 @@ class LoginScreen extends StatelessWidget {
       if(value){
         Navigator.of(context).pushNamedAndRemoveUntil(NavRoutes.productListroute, (route) => false);
       } else{
-        showflutterToast("invalid credential");
+         Flushbar(message: "Invalid Credential",backgroundColor: Colors.red,);
       }
     });
 
