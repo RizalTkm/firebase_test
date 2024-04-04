@@ -1,3 +1,5 @@
+import 'package:another_flushbar/flushbar.dart';
+import 'package:firesbase_test/config/routes/routenames.dart';
 import 'package:firesbase_test/features/login/data/model/login_model.dart';
 import 'package:firesbase_test/features/login/presentation/bloc/auth/cubit/auth_cubit.dart';
 import 'package:firesbase_test/features/login/presentation/bloc/credential/cubit/credential_cubit.dart';
@@ -9,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../widgets/signinbutton.dart';
 
+// ignore: must_be_immutable
 class SignUpscreen extends StatelessWidget {
   SignUpscreen({
     super.key,
@@ -17,6 +20,9 @@ class SignUpscreen extends StatelessWidget {
   final usernamecontroller = TextEditingController();
   final passwordController = TextEditingController();
   final confirmpasswordcontroller = TextEditingController();
+  // bool isobscurepassword = true;
+
+  final ValueNotifier<bool> isobscurepassword = ValueNotifier(true);
 
   @override
   Widget build(BuildContext context) {
@@ -26,32 +32,29 @@ class SignUpscreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: BlocConsumer<CredentialCubit, CredentialState>(
           listener: (context, state) {
-            if(state is CredentialSuccesstate){
+            if (state is CredentialSuccesstate) {
               BlocProvider.of<AuthCubit>(context).loggedIn();
-            } else if(state is CredentialFailure){
-
+            } else if (state is CredentialFailure) {
               showflutterToast('Invalid username of password');
             }
-
-            
           },
           builder: (context, credstate) {
-            if( credstate is CredentialLoading){
+            if (credstate is CredentialLoading) {
               return const CircularProgressIndicatorWidget();
-            } 
-             if (credstate is CredentialSuccesstate){ 
-                BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, authstate) {
-                   
-                   if(authstate is AuthenticatedState ){
-                    return  ProductListScreen(uid: authstate.uid,);
-                   } else {
+            }
+            if (credstate is CredentialSuccesstate) {
+              BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, authstate) {
+                  if (authstate is AuthenticatedState) {
+                    return ProductListScreen(
+                      uid: authstate.uid,
+                    );
+                  } else {
                     return _signupForm(context);
-                   }
-
-                  },
-                );
-            } 
+                  }
+                },
+              );
+            }
             return _signupForm(context);
           },
         ),
@@ -59,44 +62,54 @@ class SignUpscreen extends StatelessWidget {
     );
   }
 
-
-  Widget _signupForm(BuildContext context){
-
+  Widget _signupForm(
+    BuildContext context,
+  ) {
     return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextFormField(
-                  controller: usernamecontroller,
-                  decoration: const InputDecoration(labelText: 'User name'),
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextFormField(
+          controller: usernamecontroller,
+          decoration: const InputDecoration(labelText: 'User name'),
+        ),
+        const SizedBox(height: 16),
+        ValueListenableBuilder(
+            valueListenable: isobscurepassword,
+            builder: (context, value, child) {
+              return TextFormField(
+                controller: passwordController,
+                obscureText: isobscurepassword.value,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  suffixIcon: InkWell(
+                      onTap: () {
+                        isobscurepassword.value = !isobscurepassword.value;
+                      },
+                      child: isobscurepassword.value
+                          ? const Icon(Icons.remove_red_eye)
+                          : const Icon(Icons.remove_red_eye_rounded)),
                 ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                      labelText: 'Password',
-                      suffixIcon: Icon(Icons.remove_red_eye)),
-                ),
-                const SizedBox(height: 24),
-                TextFormField(
-                  controller: confirmpasswordcontroller,
-                  decoration: const InputDecoration(
-                    labelText: 'confirm Password',
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                SignInButton(
-                    onpressed: () {
-                    submitUsersignup(context);
-                   //Smallwidgets.circularProgressIndicator();
-                    },
-                    label: 'Sign up'),
-                const SizedBox(height: 16),
-              ],
-            );
-
+              );
+            }),
+        const SizedBox(height: 24),
+        TextFormField(
+          controller: confirmpasswordcontroller,
+          decoration: const InputDecoration(
+            labelText: 'confirm Password',
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        SignInButton(
+            onpressed: () {
+              submitUsersignup(context);
+              //Smallwidgets.circularProgressIndicator();
+            },
+            label: 'Sign up'),
+        const SizedBox(height: 16),
+      ],
+    );
   }
 
   //functions
@@ -119,6 +132,25 @@ class SignUpscreen extends StatelessWidget {
         usercred: loginModel(
             username: usernamecontroller.text,
             password: passwordController.text));
+
+    BlocProvider.of<AuthCubit>(context).loggedIn().then((value) {
+      if (value) {
+        // showflutterToast("user registration successfull");
+        Flushbar(
+          message: "user registration successfull",
+          backgroundColor: Colors.green,
+        );
+        Future.delayed(
+            Duration(seconds: 2),
+            () => Navigator.of(context).pushNamedAndRemoveUntil(
+                NavRoutes.loginroute, (route) => false));
+      } else {
+        Flushbar(
+          message: "user registration failed",
+          backgroundColor: Colors.red,
+        );
+      }
+    });
   }
 
   showflutterToast(String message) async {

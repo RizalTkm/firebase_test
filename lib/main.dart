@@ -32,8 +32,8 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           routes: {
-            '/productList': (context) => const ProductListScreen(),
-            '/login': (context) => const LoginScreen(),
+            '/productList': (context) =>  ProductListScreen(),
+            '/login': (context) =>  LoginScreen(),
             '/signup':(context)=>  SignUpscreen()
           },
           home: StreamBuilder(
@@ -42,7 +42,7 @@ class MainApp extends StatelessWidget {
                 if (snapshot.hasData) {
                   return  ProductListScreen(uid: snapshot.data?.uid,);
                 } else {
-                  return const LoginScreen();
+                  return  LoginScreen();
                 }
               })),
     );
