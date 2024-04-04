@@ -32,17 +32,19 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           routes: {
-            '/productList': (context) =>  ProductListScreen(),
-            '/login': (context) =>  LoginScreen(),
-            '/signup':(context)=>  SignUpscreen()
+            '/productList': (context) => ProductListScreen(),
+            '/login': (context) => LoginScreen(),
+            '/signup': (context) => SignUpscreen()
           },
           home: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return  ProductListScreen(uid: snapshot.data?.uid,);
+                  return ProductListScreen(
+                    uid: snapshot.data?.uid,
+                  );
                 } else {
-                  return  LoginScreen();
+                  return LoginScreen();
                 }
               })),
     );

@@ -50,7 +50,11 @@ class LoginScreen extends StatelessWidget {
                   );
                 }),
             const SizedBox(height: 24),
-            SignInButton(onpressed: () {}, label: 'Sign in'),
+            SignInButton(
+                onpressed: () {
+                  submitSign(context);
+                },
+                label: 'Sign in'),
             const SizedBox(height: 16),
             TextButton(
               onPressed: () {
@@ -74,21 +78,23 @@ class LoginScreen extends StatelessWidget {
       return;
     }
 
-    BlocProvider.of<CredentialCubit>(context).submitSignin(
-        usercred: LoginEntity(
-            username: usernamecontroller.text,
-            password: passwordController.text));
-
-    BlocProvider.of<AuthCubit>(context).loggedIn().then((value) {
-      if (value) {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-            NavRoutes.productListroute, (route) => false);
-      } else {
-        Flushbar(
-          message: "Invalid Credential",
-          backgroundColor: Colors.red,
-        );
-      }
+    BlocProvider.of<CredentialCubit>(context)
+        .submitSignin(
+            usercred: LoginEntity(
+                username: usernamecontroller.text,
+                password: passwordController.text))
+        .whenComplete(() {
+      BlocProvider.of<AuthCubit>(context).loggedIn().then((value) {
+        if (value) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              NavRoutes.productListroute, (route) => false);
+        } else {
+          Flushbar(
+            message: "Invalid Credential",
+            backgroundColor: Colors.red,
+          );
+        }
+      });
     });
   }
 
