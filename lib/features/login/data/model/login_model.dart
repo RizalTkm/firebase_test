@@ -3,11 +3,14 @@ import 'package:firesbase_test/features/login/domain/entities/login_entity.dart'
 
 class loginModel extends LoginEntity{
 
+  @override
   final String? username;
+  @override
   final String? password;
+  @override
   final String? uid;
 
-  loginModel( { this.username,  this.password,this.uid,}):super(username: username,password: password);
+  const loginModel( { this.username,  this.password,this.uid,}):super(username: username,password: password);
 
 
 
