@@ -45,8 +45,8 @@ class LoginScreen extends StatelessWidget {
                                   !isobscurepassword.value;
                             },
                             child: isobscurepassword.value
-                                ? Icon(Icons.visibility_sharp)
-                                : Icon(Icons.visibility_off))),
+                                ? const Icon(Icons.visibility_sharp)
+                                : const Icon(Icons.visibility_off))),
                   );
                 }),
             const SizedBox(height: 24),
@@ -78,16 +78,18 @@ class LoginScreen extends StatelessWidget {
         usercred: LoginEntity(
             username: usernamecontroller.text,
             password: passwordController.text));
-    
-    BlocProvider.of<AuthCubit>(context).loggedIn().then((value) {
 
-      if(value){
-        Navigator.of(context).pushNamedAndRemoveUntil(NavRoutes.productListroute, (route) => false);
-      } else{
-         Flushbar(message: "Invalid Credential",backgroundColor: Colors.red,);
+    BlocProvider.of<AuthCubit>(context).loggedIn().then((value) {
+      if (value) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            NavRoutes.productListroute, (route) => false);
+      } else {
+        Flushbar(
+          message: "Invalid Credential",
+          backgroundColor: Colors.red,
+        );
       }
     });
-
   }
 
   showflutterToast(String message) async {
