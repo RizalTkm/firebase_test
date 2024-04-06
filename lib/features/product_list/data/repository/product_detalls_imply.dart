@@ -37,9 +37,9 @@ class ProductRepoImply extends ProductRepository {
     final uniqueName = DateTime.now().microsecondsSinceEpoch.toString();
     final refimagetoupload = firestorageref.child('images').child(uniqueName);
 
-    await refimagetoupload.putFile(imagefile);
+    await refimagetoupload.putFile(imagefile).then((p0) => null);
 
-    final imageurl = await firestorageref.getDownloadURL();
+    final imageurl = await refimagetoupload.getDownloadURL();
 
     return imageurl;
   }

@@ -98,6 +98,7 @@ class ProductCreationScreen extends StatelessWidget {
                       ),
                       BlocBuilder<ProductCubit, ProductState>(
                         builder: (context, state) {
+<<<<<<< HEAD
                           // if (state is ProductUploadLoading) {
                           //   return const LimitedBox(
                           //     maxHeight: 30,
@@ -105,6 +106,15 @@ class ProductCreationScreen extends StatelessWidget {
                           //     child: CircularProgressIndicator(),
                           //   );
                           // }
+=======
+                          if (state is ProductUploadLoading) {
+                            return const LimitedBox(
+                              maxHeight: 20,
+                              maxWidth: 20,
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+>>>>>>> 2d4d6f09a035cff872910d9570f155918480f0e1
                           if (state is ProductuploadFailure) {
                             return Text('Upload Failed');
                           }
