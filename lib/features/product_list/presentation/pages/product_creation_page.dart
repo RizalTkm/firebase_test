@@ -115,6 +115,7 @@ class ProductCreationScreen extends StatelessWidget {
                           if (state is ProductuploadSuccess) {
                             showflutterToast("uploaded Successfully");
                             Navigator.of(context).pushReplacementNamed(NavRoutes.productListroute);
+                            //fyfy
                             return Text('');
                           }
 
