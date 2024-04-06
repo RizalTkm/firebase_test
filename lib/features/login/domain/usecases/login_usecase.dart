@@ -11,7 +11,9 @@ class LoginUsecase{
   Future<void> signIn({required LoginEntity loginEntity})async {
 
 
-    return await  firebaseRepository.signinUser(userCred: loginEntity);
+     await  firebaseRepository.signinUser(userCred: loginEntity); 
+
+     
 
   }
 

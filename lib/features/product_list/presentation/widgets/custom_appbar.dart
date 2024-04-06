@@ -1,3 +1,4 @@
+import 'package:firesbase_test/features/login/presentation/page/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,8 +20,7 @@ class CustomappbarWidget extends StatelessWidget {
         builder: (context, state) {
 
           if(state is UnauthenticatedState){
-              Navigator.of(context).pushNamedAndRemoveUntil(
-              NavRoutes.loginroute, (route) => false);
+             return LoginScreen();
           }
           return AppBar(
             title: Center(child: Text(title)),
