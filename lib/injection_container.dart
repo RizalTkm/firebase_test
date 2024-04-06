@@ -29,7 +29,7 @@ Future<void> init() async {
       signOutUseCase: sl.call()));
 
   sl.registerFactory<CredentialCubit>(() => CredentialCubit(
-      loginUsecase: sl.call(), signUpUseCase: sl.call()));
+      loginUsecase: sl.call(), signUpUseCase: sl.call(),getCurrentUidUseCase: sl.call()));
 
   sl.registerFactory<ImageuploadCubit>(() => ImageuploadCubit());
   sl.registerFactory<ProductCubit>(() => ProductCubit(sl.call()));

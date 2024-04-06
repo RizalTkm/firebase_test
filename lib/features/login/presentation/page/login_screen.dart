@@ -7,6 +7,7 @@ import 'package:firesbase_test/features/login/presentation/bloc/auth/cubit/auth_
 import 'package:firesbase_test/features/login/presentation/bloc/credential/cubit/credential_cubit.dart';
 import 'package:firesbase_test/features/login/presentation/widgets/circularprogressIndicator.dart';
 import 'package:firesbase_test/features/login/presentation/widgets/signinbutton.dart';
+import 'package:firesbase_test/features/product_list/presentation/pages/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -31,12 +32,10 @@ class LoginScreen extends StatelessWidget {
             } else if (state is CredentialSuccesstate) {
               showflutterToast("Logged successfully");
 
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  NavRoutes.productListroute, (route) => false);
-              return Text('');
+              return ProductListScreen();
             } else if (state is CredentialFailure) {
               showflutterToast("loggin failed");
-              return Text('');
+              return LoginScreen();
             }
 
             return Column(
