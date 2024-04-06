@@ -24,6 +24,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Sign in')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
+<<<<<<< HEAD
         child: BlocConsumer<CredentialCubit, CredentialState>(
           listener: (context, state) {
             
@@ -78,6 +79,48 @@ class LoginScreen extends StatelessWidget {
               ],
             );
           },
+=======
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextFormField(
+              controller: usernamecontroller,
+              decoration: const InputDecoration(labelText: 'User name'),
+            ),
+            const SizedBox(height: 16),
+            ValueListenableBuilder(
+                valueListenable: isobscurepassword,
+                builder: (context, value, child) {
+                  return TextFormField(
+                    controller: passwordController,
+                    obscureText: isobscurepassword.value,
+                    decoration: InputDecoration(
+                        labelText: 'Password',
+                        suffixIcon: InkWell(
+                            onTap: () {
+                              isobscurepassword.value =
+                                  !isobscurepassword.value;
+                            },
+                            child: isobscurepassword.value
+                                ? const Icon(Icons.visibility_sharp)
+                                : const Icon(Icons.visibility_off))),
+                  );
+                }),
+            const SizedBox(height: 24),
+            SignInButton(
+                onpressed: () {
+                  submitSign(context);
+                },
+                label: 'Sign in'),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, NavRoutes.signuproute);
+              },
+              child: const Text('Sign Up'),
+            ),
+          ],
+>>>>>>> 5fc46b7813ff9fe656551a2bea48f9282d57a5b0
         ),
       ),
     );
