@@ -8,7 +8,7 @@ class FirebaseRDataSourceImply implements FirebaseRemoteDataSource {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
 
-  FirebaseRDataSourceImply({ required this.firestore, required this.auth});
+  FirebaseRDataSourceImply({required this.firestore, required this.auth});
 
   @override
   Future<void> signinUser({required LoginEntity userCred}) async {
@@ -18,7 +18,7 @@ class FirebaseRDataSourceImply implements FirebaseRemoteDataSource {
 
   @override
   Future<String> getCurrentUSerId() async {
-    return  auth.currentUser!.uid;
+    return auth.currentUser!.uid;
   }
 
   @override
@@ -52,10 +52,9 @@ class FirebaseRDataSourceImply implements FirebaseRemoteDataSource {
     await auth.createUserWithEmailAndPassword(
         email: usercred.username!, password: usercred.password!);
   }
-  
+
   @override
-  Future<void> signout()async  {
-  
-  await auth.signOut();
+  Future<void> signout() async {
+    await auth.signOut();
   }
 }

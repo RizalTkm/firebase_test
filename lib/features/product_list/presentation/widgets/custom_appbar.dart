@@ -15,12 +15,10 @@ class CustomappbarWidget extends StatelessWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(60),
       child: BlocBuilder<AuthCubit, AuthState>(
-
         builder: (context, state) {
-
-          if(state is UnauthenticatedState){
-              Navigator.of(context).pushNamedAndRemoveUntil(
-              NavRoutes.loginroute, (route) => false);
+          if (state is UnauthenticatedState) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                NavRoutes.loginroute, (route) => false);
           }
           return AppBar(
             title: Center(child: Text(title)),
