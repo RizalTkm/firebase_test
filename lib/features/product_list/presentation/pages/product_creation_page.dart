@@ -111,38 +111,39 @@ class ProductCreationScreen extends StatelessWidget {
                           if (state is ProductInitial) {
                             return ElevatedButton.icon(
                               onPressed: () {
-                                 if(nameController.text.isEmpty){
-                                showflutterToast("please Enter product Name");
-                                return;
-                              }
-                              if(sizeController.text.isEmpty){
-                                 showflutterToast("please Enter product size");
-                                return;
-                              }
-                              if(priceController.text.isEmpty){
-                                 showflutterToast("please Enter product price");
-                                return;
-                              }
+                                if (nameController.text.isEmpty) {
+                                  showflutterToast("please Enter product Name");
+                                  return;
+                                }
+                                if (sizeController.text.isEmpty) {
+                                  showflutterToast("please Enter product size");
+                                  return;
+                                }
+                                if (priceController.text.isEmpty) {
+                                  showflutterToast(
+                                      "please Enter product price");
+                                  return;
+                                }
 
-                              var images = selectedImages.value
-                                  .map((e) => File(e.path))
-                                  .toList();
-                              BlocProvider.of<ProductCubit>(context)
-                                  .uploadImagesTofirebase(images)
-                                  .then((value) {
+                                var images = selectedImages.value
+                                    .map((e) => File(e.path))
+                                    .toList();
                                 BlocProvider.of<ProductCubit>(context)
-                                    .uploadProductDetails(ProductDetailsModel(
-                                        productname: nameController.text,
-                                        measurement: sizeController.text,
-                                        price: priceController.text,
-                                        imageUrls: value));
-                              });
+                                    .uploadImagesTofirebase(images)
+                                    .then((value) {
+                                  BlocProvider.of<ProductCubit>(context)
+                                      .uploadProductDetails(ProductDetailsModel(
+                                          productname: nameController.text,
+                                          measurement: sizeController.text,
+                                          price: priceController.text,
+                                          imageUrls: value));
+                                });
                               },
                               icon: const Icon(Icons.upload),
                               label: const Text('Create'),
                             );
                           }
-                          return SizedBox();;
+                          return SizedBox();
                         },
                       )
                     ],
@@ -174,8 +175,7 @@ class ProductCreationScreen extends StatelessWidget {
     }
   }
 
-
-    showflutterToast(String message) async {
+  showflutterToast(String message) async {
     await Fluttertoast.showToast(msg: message, textColor: Colors.red);
   }
 }
