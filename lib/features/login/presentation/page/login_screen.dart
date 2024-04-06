@@ -27,13 +27,23 @@ class LoginScreen extends StatelessWidget {
         child: BlocConsumer<CredentialCubit, CredentialState>(
           listener: (context, state) {
             
-
+                
           },
           builder: (context, state) {
 
              if(state is CredentialLoading){
               return const CircularProgressIndicatorWidget();
-             } 
+             } else if ( state is CredentialSuccesstate){
+
+              showflutterToast("Logged successfully");
+
+                Navigator.of(context).pushNamedAndRemoveUntil(
+              NavRoutes.productListroute, (route) => false);
+             } else if(state is CredentialFailure){
+               
+               showflutterToast("loggin failed");
+              
+             }
 
              
             return Column(
@@ -84,8 +94,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   Future<void> submitSign(BuildContext context) async {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(NavRoutes.productListroute, (route) => false);
+   
     if (usernamecontroller.text.isEmpty) {
       showflutterToast('Please enter username');
       return;
@@ -94,24 +103,14 @@ class LoginScreen extends StatelessWidget {
       showflutterToast('Please enter password ');
       return;
     }
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(NavRoutes.productListroute, (route) => false);
+  
 
     await BlocProvider.of<CredentialCubit>(context)
         .submitSignin(
             usercred: LoginEntity(
                 username: usernamecontroller.text,
-                password: passwordController.text))
-        .whenComplete(() async {
-      await BlocProvider.of<AuthCubit>(context).loggedIn().then((value) {
-        if (value) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-              NavRoutes.productListroute, (route) => false);
-        } else {
-          Fluttertoast.showToast(msg: 'invalid credential');
-        }
-      });
-    });
+                password: passwordController.text));
+      
   }
 
   showflutterToast(String message) async {
