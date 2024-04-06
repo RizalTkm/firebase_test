@@ -1,7 +1,11 @@
 import 'package:firesbase_test/config/routes/routenames.dart';
-import 'package:firesbase_test/features/login/presentation/bloc/auth/cubit/auth_cubit.dart';
+
+import 'package:firesbase_test/features/product_list/presentation/widgets/productcard.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+
+import '../widgets/custom_appbar.dart';
+
 
 // ignore: must_be_immutable
 class ProductListScreen extends StatelessWidget {
@@ -14,24 +18,15 @@ class ProductListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My App'),
-        actions: [
-          InkWell(
-              onTap: () {
-                BlocProvider.of<AuthCubit>(context).SignOut().whenComplete(() {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      NavRoutes.loginroute, (route) => false);
-                });
-              },
-              child: const Icon(Icons.logout))
-        ],
-      ),
+      floatingActionButton: ElevatedButton.icon(onPressed: (){
+        Navigator.of(context).pushNamed(NavRoutes.prouctCreateroute);
+      }, icon: const Icon(Icons.add), label: const Text("Add product")),
+      appBar: const PreferredSize(preferredSize: Size.fromHeight(50), child: CustomappbarWidget(title: 'Home',)),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
+            child: TextFormField(
               onChanged: (value) {},
               decoration: const InputDecoration(
                 labelText: 'Search',
@@ -43,16 +38,13 @@ class ProductListScreen extends StatelessWidget {
             child: ListView.builder(
               itemCount: productItems.length,
               itemBuilder: (context, index) {
-                return Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      backgroundImage:
-                          NetworkImage('https://picsum.photos/200/300'),
-                    ),
-                    title: Text(productItems[index]),
-                  ),
-                );
+                return ProductTile(
+                    productName: productItems[index],
+                    ProductPrice: "500",
+                    productsize:'18' ,
+              
+                    imageUrl:
+                        'https://www.shutterstock.com/image-photo/one-tree-perfect-grass-field-76166707');
               },
             ),
           ),
@@ -61,3 +53,5 @@ class ProductListScreen extends StatelessWidget {
     );
   }
 }
+
+

@@ -1,29 +1,16 @@
+import 'dart:io';
 
+import 'package:equatable/equatable.dart';
 
-
-
-
-class ProductDetailsEntity {
-
+// ignore: must_be_immutable
+class ProductDetailsEntity extends Equatable {
   String? productname;
   String? measurement;
   String? price;
+  List<String> imageUrls;
 
-  ProductDetailsEntity({this.productname, this.measurement, this.price});
+  ProductDetailsEntity({required this.productname, required this.measurement,required this.price,required this.imageUrls});
 
-  ProductDetailsEntity.fromJson(Map<String, dynamic> json) {
-    productname = json['productname'];
-    measurement = json['measurement'];
-    price = json['price'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['productname'] = productname;
-    data['measurement'] = measurement;
-    data['price'] = price;
-    return data;
-  }
-
- 
+  @override
+  List<Object?> get props => [productname, measurement, price];
 }
