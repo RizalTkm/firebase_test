@@ -1,29 +1,31 @@
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firesbase_test/features/product_list/domain/entities/product_details.dart';
 
+// ignore: must_be_immutable
 class ProductDetailsModel extends ProductDetailsEntity {
-  @override
-  String? productname;
-  @override
-  String? measurement;
-  @override
-  String? price;
+  ProductDetailsModel(
+      {required super.productname,
+      required super.measurement,
+      required super.price,
+      required super.imageUrls});
 
-  ProductDetailsModel({this.productname, this.measurement, this.price});
-
-  ProductDetailsModel.fromJson(Map<String, dynamic> json) {
-    productname = json['productname'];
-    measurement = json['measurement'];
-    price = json['price'];
+  factory ProductDetailsModel.fromsnapshot(DocumentSnapshot snapshot) {
+    return ProductDetailsModel(
+        productname: snapshot.get('productname'),
+        measurement: snapshot.get('measurement'),
+        price: snapshot.get('price'),
+        imageUrls : snapshot.get('imageurls'));
   }
 
-  @override
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['productname'] = productname;
-    data['measurement'] = measurement;
-    data['price'] = price;
-    return data;
+  Map<String, dynamic> todocument() {
+    return {
+      "productname": productname,
+      "measurement": measurement,
+      "price": price,
+      "imageurls":imageUrls
+    };
   }
+
+
+  
 }

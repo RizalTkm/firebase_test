@@ -4,6 +4,9 @@ import 'package:firesbase_test/features/login/presentation/bloc/auth/cubit/auth_
 import 'package:firesbase_test/features/login/presentation/bloc/credential/cubit/credential_cubit.dart';
 import 'package:firesbase_test/features/login/presentation/page/login_screen.dart';
 import 'package:firesbase_test/features/login/presentation/page/signup_page.dart';
+import 'package:firesbase_test/features/product_list/presentation/bloc/cubit/imageupload_cubit.dart';
+import 'package:firesbase_test/features/product_list/presentation/bloc/cubit/product_cubit.dart';
+import 'package:firesbase_test/features/product_list/presentation/pages/product_creation_page.dart';
 import 'package:firesbase_test/features/product_list/presentation/pages/product_list_screen.dart';
 import 'package:firesbase_test/firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -27,14 +30,20 @@ class MainApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthCubit>(
             create: (_) => di.sl<AuthCubit>()..Appstarted()),
-        BlocProvider<CredentialCubit>(create: (_) => di.sl<CredentialCubit>())
+        BlocProvider<CredentialCubit>(create: (_) => di.sl<CredentialCubit>()),
+        BlocProvider<ImageuploadCubit>(
+          create: (_) => di.sl<ImageuploadCubit>(),
+          
+        ),
+        BlocProvider<ProductCubit>(create: (_)=> di.sl<ProductCubit>() )
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           routes: {
-            '/productList': (context) => ProductListScreen(),
-            '/login': (context) => LoginScreen(),
-            '/signup': (context) => SignUpscreen()
+            '/productList': (context) =>  ProductListScreen(),
+            '/login': (context) =>  LoginScreen(),
+            '/signup':(context)=>  SignUpscreen(),
+            '/productCreate':(context)=>  ProductCreationScreen()
           },
           home: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
