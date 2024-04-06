@@ -100,8 +100,8 @@ class ProductCreationScreen extends StatelessWidget {
                         builder: (context, state) {
                           if (state is ProductUploadLoading) {
                             return const LimitedBox(
-                              maxHeight: 30,
-                              maxWidth: 30,
+                              maxHeight: 20,
+                              maxWidth: 20,
                               child: CircularProgressIndicator(),
                             );
                           }
