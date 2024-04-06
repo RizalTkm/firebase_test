@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firesbase_test/config/constants/constants.dart';
-import 'package:firesbase_test/config/routes/routenames.dart';
 import 'package:firesbase_test/features/product_list/data/models/product_model.dart';
 import 'package:firesbase_test/features/product_list/presentation/bloc/cubit/imageupload_cubit.dart';
 import 'package:firesbase_test/features/product_list/presentation/bloc/cubit/product_cubit.dart';
@@ -100,21 +99,18 @@ class ProductCreationScreen extends StatelessWidget {
                       BlocBuilder<ProductCubit, ProductState>(
                         builder: (context, state) {
                           if (state is ProductUploadLoading) {
-                            return const Padding(
-                              padding: EdgeInsets.all(20.0),
-                              child:  LimitedBox(
-                                maxHeight: 40,
-                                maxWidth: 20,
-                                child: CircularProgressIndicator( color: Colors.red,),
-                              ),
+                            return const LimitedBox(
+                              maxHeight: 20,
+                              maxWidth: 20,
+                              child: CircularProgressIndicator(),
                             );
                           }
                           if (state is ProductuploadFailure) {
-                            return  const Text('Upload Failed');
+                            return Text('Upload Failed');
                           }
                           if (state is ProductuploadSuccess) {
                             showflutterToast("uploaded Successfully");
-                            Navigator.of(context).pushReplacementNamed(NavRoutes.productListroute);
+
                             return Text('');
                           }
 
