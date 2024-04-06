@@ -32,9 +32,10 @@ class ProductCubit extends Cubit<ProductState> {
 
   Future<void> uploadProductDetails(
       ProductDetailsModel productDetailsModel) async {
+    emit(ProductUploadLoading());
     try {
-      emit(ProductUploadLoading());
       await productRepository.submitNewProduct(productDetailsModel);
+      emit(ProductuploadSuccess());
     } catch (e) {
       emit(ProductuploadFailure());
     }

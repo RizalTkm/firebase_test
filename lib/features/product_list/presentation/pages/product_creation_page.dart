@@ -108,6 +108,11 @@ class ProductCreationScreen extends StatelessWidget {
                           if (state is ProductuploadFailure) {
                             return Text('Upload Failed');
                           }
+                          if (state is ProductuploadSuccess) {
+                            showflutterToast("uploaded Successfully");
+                            return Text('');
+                          }
+
                           if (state is ProductInitial) {
                             return ElevatedButton.icon(
                               onPressed: () {
