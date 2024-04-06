@@ -24,11 +24,8 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Sign in')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocConsumer<CredentialCubit, CredentialState>(
-          listener: (context, state) {
-            
-                
-          },
+        child: BlocBuilder<CredentialCubit, CredentialState>(
+         
           builder: (context, state) {
 
              if(state is CredentialLoading){
