@@ -50,6 +50,7 @@ class ProductCreationScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: TextFormField(
+                          controller: priceController,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                               label: Text("Price"),
@@ -109,15 +110,8 @@ class ProductCreationScreen extends StatelessWidget {
                           }
                           if (state is ProductInitial) {
                             return ElevatedButton.icon(
-                              onPressed: () {},
-                              icon: const Icon(Icons.upload),
-                              label: const Text('Create'),
-                            );
-                          }
-                          return ElevatedButton.icon(
-                            onPressed: () {
-
-                              if(nameController.text.isEmpty){
+                              onPressed: () {
+                                 if(nameController.text.isEmpty){
                                 showflutterToast("please Enter product Name");
                                 return;
                               }
@@ -143,10 +137,12 @@ class ProductCreationScreen extends StatelessWidget {
                                         price: priceController.text,
                                         imageUrls: value));
                               });
-                            },
-                            icon: const Icon(Icons.upload),
-                            label: const Text('Create'),
-                          );
+                              },
+                              icon: const Icon(Icons.upload),
+                              label: const Text('Create'),
+                            );
+                          }
+                          return SizedBox();;
                         },
                       )
                     ],

@@ -16,7 +16,7 @@ class CustomtextFormField extends StatelessWidget {
          const  SizedBox(height: 5,),
           TextFormField(controller: controller ,
 
-        decoration: const InputDecoration(border: OutlineInputBorder(),label: Text('productname')),
+        decoration:  InputDecoration(border: OutlineInputBorder(),label: Text(label)),
         
         
       ),
