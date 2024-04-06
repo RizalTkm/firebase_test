@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firesbase_test/config/constants/constants.dart';
+import 'package:firesbase_test/config/routes/routenames.dart';
 import 'package:firesbase_test/features/product_list/data/models/product_model.dart';
 import 'package:firesbase_test/features/product_list/presentation/bloc/cubit/imageupload_cubit.dart';
 import 'package:firesbase_test/features/product_list/presentation/bloc/cubit/product_cubit.dart';
@@ -110,7 +111,9 @@ class ProductCreationScreen extends StatelessWidget {
                           }
                           if (state is ProductuploadSuccess) {
                             showflutterToast("uploaded Successfully");
-
+                            Navigator.of(context).pushReplacementNamed(
+                                NavRoutes.productListroute);
+                            //fyfy
                             return Text('');
                           }
 
