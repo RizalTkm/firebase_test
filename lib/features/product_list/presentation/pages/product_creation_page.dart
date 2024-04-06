@@ -100,21 +100,19 @@ class ProductCreationScreen extends StatelessWidget {
                       BlocBuilder<ProductCubit, ProductState>(
                         builder: (context, state) {
                           if (state is ProductUploadLoading) {
-                            return const Padding(
-                              padding: EdgeInsets.all(20.0),
-                              child:  LimitedBox(
-                                maxHeight: 40,
-                                maxWidth: 20,
-                                child: CircularProgressIndicator( color: Colors.red,),
-                              ),
+                            return const LimitedBox(
+                              maxHeight: 20,
+                              maxWidth: 20,
+                              child: CircularProgressIndicator(),
                             );
                           }
                           if (state is ProductuploadFailure) {
-                            return  const Text('Upload Failed');
+                            return Text('Upload Failed');
                           }
                           if (state is ProductuploadSuccess) {
                             showflutterToast("uploaded Successfully");
-                            Navigator.of(context).pushReplacementNamed(NavRoutes.productListroute);
+                            Navigator.of(context).pushReplacementNamed(
+                                NavRoutes.productListroute);
                             //fyfy
                             return Text('');
                           }
