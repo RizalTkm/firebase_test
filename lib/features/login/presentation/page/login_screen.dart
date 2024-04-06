@@ -78,21 +78,18 @@ class LoginScreen extends StatelessWidget {
       return;
     }
 
-    BlocProvider.of<CredentialCubit>(context)
+    await BlocProvider.of<CredentialCubit>(context)
         .submitSignin(
             usercred: LoginEntity(
                 username: usernamecontroller.text,
                 password: passwordController.text))
-        .whenComplete(() {
-      BlocProvider.of<AuthCubit>(context).loggedIn().then((value) {
+        .whenComplete(() async {
+      await BlocProvider.of<AuthCubit>(context).loggedIn().then((value) {
         if (value) {
           Navigator.of(context).pushNamedAndRemoveUntil(
               NavRoutes.productListroute, (route) => false);
         } else {
-          Flushbar(
-            message: "Invalid Credential",
-            backgroundColor: Colors.red,
-          );
+          Fluttertoast.showToast(msg: 'invalid credential');
         }
       });
     });

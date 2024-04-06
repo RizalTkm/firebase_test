@@ -44,21 +44,17 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-
-  Future<bool> loggedIn()async{
-
-   bool isloggedIn = false;
+  Future<bool> loggedIn() async {
+    bool isloggedIn = false;
 
     try {
-
       final uid = await getCurrentUidUseCase.getCurrentUid();
 
       emit(AuthenticatedState(uid: uid));
-     isloggedIn =true;
-      return isloggedIn;
+
+      return uid != '' ? true : false;
     } catch (e) {
-      
-      isloggedIn =false;
+      isloggedIn = false;
       emit(UnauthenticatedState());
       return isloggedIn;
     }
