@@ -110,7 +110,7 @@ class ProductCreationScreen extends StatelessWidget {
                             );
                           }
                           if (state is ProductuploadFailure) {
-                            return Text('Upload Failed');
+                            return  const Text('Upload Failed');
                           }
                           if (state is ProductuploadSuccess) {
                             showflutterToast("uploaded Successfully");
