@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firesbase_test/features/product_list/data/models/product_model.dart';
 import 'package:firesbase_test/features/product_list/domain/repository/product_repository.dart';
-import 'package:image_picker/image_picker.dart';
 
 part 'product_state.dart';
 

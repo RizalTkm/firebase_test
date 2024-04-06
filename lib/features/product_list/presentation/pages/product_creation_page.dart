@@ -98,13 +98,13 @@ class ProductCreationScreen extends StatelessWidget {
                       ),
                       BlocBuilder<ProductCubit, ProductState>(
                         builder: (context, state) {
-                          if (state is ProductUploadLoading) {
-                            return const LimitedBox(
-                              maxHeight: 30,
-                              maxWidth: 30,
-                              child: CircularProgressIndicator(),
-                            );
-                          }
+                          // if (state is ProductUploadLoading) {
+                          //   return const LimitedBox(
+                          //     maxHeight: 30,
+                          //     maxWidth: 30,
+                          //     child: CircularProgressIndicator(),
+                          //   );
+                          // }
                           if (state is ProductuploadFailure) {
                             return Text('Upload Failed');
                           }
@@ -131,12 +131,12 @@ class ProductCreationScreen extends StatelessWidget {
                                 BlocProvider.of<ProductCubit>(context)
                                     .uploadImagesTofirebase(images)
                                     .then((value) {
-                                  BlocProvider.of<ProductCubit>(context)
-                                      .uploadProductDetails(ProductDetailsModel(
-                                          productname: nameController.text,
-                                          measurement: sizeController.text,
-                                          price: priceController.text,
-                                          imageUrls: value));
+                                  // BlocProvider.of<ProductCubit>(context)
+                                  //     .uploadProductDetails(ProductDetailsModel(
+                                  //         productname: nameController.text,
+                                  //         measurement: sizeController.text,
+                                  //         price: priceController.text,
+                                  //         imageUrls: value));
                                 });
                               },
                               icon: const Icon(Icons.upload),
