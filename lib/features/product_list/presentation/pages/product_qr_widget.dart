@@ -1,38 +1,28 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 793232f37b8a1e68e25e6f81a357892f9d9fd31a
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ProductQrWidget extends StatelessWidget {
-<<<<<<< HEAD
-  const ProductQrWidget({super.key, this.qrdata});
+  const ProductQrWidget({super.key, this.snapshotdata});
 
-  final String? qrdata;
+  final dynamic snapshotdata;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: QrImageView(
-          data: qrdata.toString(),
-          size: 200,
+          data:
+              "${"Name :" + ' ' + snapshotdata['productname'].toString() + '\n' + "Size :" " " + snapshotdata["measurement"].toString()}\nPrice :"
+                      " " +
+                  snapshotdata["price"].toString() +
+                  "\n" +
+                  "Link :" +
+                  " " +
+                  snapshotdata["imageurls"][0].toString(),
           version: QrVersions.auto,
+          size: 200,
         ),
       ),
     );
-=======
-   const ProductQrWidget({super.key,  this.snapshotdata});
-
-  final dynamic snapshotdata  ;
-  
-
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(body: Center(
-      child: QrImageView(data: snapshotdata['productname']+ snapshotdata["measurement"]+snapshotdata["price"],size: 200,),
-    ),);
->>>>>>> 793232f37b8a1e68e25e6f81a357892f9d9fd31a
   }
 }

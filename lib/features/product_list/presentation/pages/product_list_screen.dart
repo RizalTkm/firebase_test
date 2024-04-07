@@ -88,13 +88,8 @@ class ProductListScreen extends StatelessWidget {
                               return InkWell(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-<<<<<<< HEAD
-                                    builder: (context) => const ProductQrWidget(
-                                      qrdata: 'weqfqfihqef',
-=======
                                     builder: (context) => ProductQrWidget(
                                       snapshotdata: productitems[index],
->>>>>>> 793232f37b8a1e68e25e6f81a357892f9d9fd31a
                                     ),
                                   ));
                                 },
