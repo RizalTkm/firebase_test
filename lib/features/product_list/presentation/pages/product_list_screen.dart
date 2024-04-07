@@ -26,7 +26,7 @@ class ProductListScreen extends StatelessWidget {
         },
         child: const Icon(Icons.add),
         elevation: 10,
-        ,
+        isExtended: true,
       ),
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(50),
