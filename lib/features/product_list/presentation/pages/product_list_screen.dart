@@ -89,7 +89,7 @@ class ProductListScreen extends StatelessWidget {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => ProductQrWidget(
-                                      qrdata: 'weqfqfihqef',
+                                      snapshotdata: productitems[index],
                                     ),
                                   ));
                                 },

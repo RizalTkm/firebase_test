@@ -45,7 +45,7 @@ class MainApp extends StatelessWidget {
             '/login': (context) =>  LoginScreen(),
             '/signup':(context)=>  SignUpscreen(),
             '/productCreate':(context)=>  ProductCreationScreen(),
-            '/productqrcode':(context) => const ProductQrWidget()
+            '/productqrcode':(context) => ProductQrWidget()
           },
           home: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
