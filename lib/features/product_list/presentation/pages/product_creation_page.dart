@@ -173,7 +173,7 @@ class ProductCreationScreen extends StatelessWidget {
         }
 
         if (selectedImages.value.isEmpty) {
-          showflutterToast("please select atleast one image");
+          showflutterToast("Please select atleast one image");
           return;
         }
 
