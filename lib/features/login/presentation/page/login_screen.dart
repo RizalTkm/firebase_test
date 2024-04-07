@@ -25,12 +25,50 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Sign in')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocBuilder<CredentialCubit, CredentialState>(
+        child: BlocConsumer<CredentialCubit, CredentialState>(
+          listener: (context,state){
+             if(state is CredentialSuccesstate){
+              BlocProvider.of<AuthCubit>(context).loggedIn();
+             } 
+
+             if(state is CredentialFailure){
+              showflutterToast("Invalid credental");
+             }
+            
+          },
           builder: (context, state) {
             if (state is CredentialLoading) {
               return const CircularProgressIndicatorWidget();
-            } else {
-              return Column(
+            } 
+            if(state is CredentialSuccesstate){
+              return BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  if(state is AuthenticatedState){
+                    return ProductListScreen();
+                  }else{
+                    return BuildSignPage(context);
+                  }
+                },
+              );
+            }
+
+            return BuildSignPage(context);
+          },
+        ),
+      ),
+    );
+  }
+
+  Future<void> submitSign(BuildContext context, uid) async {}
+
+  showflutterToast(String message) async {
+    await Fluttertoast.showToast(msg: message, textColor: Colors.red);
+  }
+
+
+  Widget BuildSignPage( BuildContext context){
+
+    return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextFormField(
@@ -73,10 +111,10 @@ class LoginScreen extends StatelessWidget {
                                     username: usernamecontroller.text,
                                     password: passwordController.text)).whenComplete(() {
 
-                                      if(state.props.isNotEmpty){
+                                      
 
                                       Navigator.of(context).pushNamedAndRemoveUntil(NavRoutes.productListroute, (route) => false);
-                                      }
+                                      
                                     });
                       },
                       label: 'Sign in'),
@@ -89,16 +127,5 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ],
               );
-            }
-          },
-        ),
-      ),
-    );
-  }
-
-  Future<void> submitSign(BuildContext context, uid) async {}
-
-  showflutterToast(String message) async {
-    await Fluttertoast.showToast(msg: message, textColor: Colors.red);
   }
 }
