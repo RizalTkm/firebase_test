@@ -174,6 +174,7 @@ class ProductCreationScreen extends StatelessWidget {
 
         if (selectedImages.value.isEmpty) {
           showflutterToast("please select atleast one image");
+          return;
         }
 
         var images = selectedImages.value.map((e) => File(e.path)).toList();

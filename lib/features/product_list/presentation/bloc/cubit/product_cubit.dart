@@ -14,7 +14,7 @@ class ProductCubit extends Cubit<ProductState> {
   final ProductRepository productRepository;
 
   Future<List<String>> uploadImagesTofirebase(List<File> images) async {
-    emit(ProductInitial());
+    
 
     try {
       emit(ProductUploadLoading());
