@@ -24,40 +24,37 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Sign in')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: BlocBuilder<CredentialCubit, CredentialState>(
-          builder: (context, state) {
-            if (state is CredentialLoading) {
-              return const CircularProgressIndicatorWidget();
-            } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextFormField(
-                    controller: usernamecontroller,
-                    decoration: const InputDecoration(labelText: 'User name'),
-                  ),
-                  const SizedBox(height: 16),
-                  ValueListenableBuilder(
-                      valueListenable: isobscurepassword,
-                      builder: (context, value, child) {
-                        return TextFormField(
-                          controller: passwordController,
-                          obscureText: isobscurepassword.value,
-                          decoration: InputDecoration(
-                              labelText: 'Password',
-                              suffixIcon: InkWell(
-                                  onTap: () {
-                                    isobscurepassword.value =
-                                        !isobscurepassword.value;
-                                  },
-                                  child: isobscurepassword.value
-                                      ? Icon(Icons.visibility_sharp)
-                                      : Icon(Icons.visibility_off))),
-                        );
-                      }),
-                  const SizedBox(height: 24),
-                  SignInButton(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: usernamecontroller,
+                decoration: const InputDecoration(labelText: 'User name'),
+              ),
+              const SizedBox(height: 16),
+              ValueListenableBuilder(
+                  valueListenable: isobscurepassword,
+                  builder: (context, value, child) {
+                    return TextFormField(
+                      controller: passwordController,
+                      obscureText: isobscurepassword.value,
+                      decoration: InputDecoration(
+                          labelText: 'Password',
+                          suffixIcon: InkWell(
+                              onTap: () {
+                                isobscurepassword.value =
+                                    !isobscurepassword.value;
+                              },
+                              child: isobscurepassword.value
+                                  ? Icon(Icons.visibility_sharp)
+                                  : Icon(Icons.visibility_off))),
+                    );
+                  }),
+              const SizedBox(height: 24),
+              BlocBuilder<CredentialCubit, CredentialState>(
+                builder: (context, state) {
+                  return SignInButton(
                       onpressed: () async {
                         if (usernamecontroller.text.isEmpty) {
                           showflutterToast('Please enter username');
@@ -71,28 +68,27 @@ class LoginScreen extends StatelessWidget {
                             .submitSignin(
                                 usercred: LoginEntity(
                                     username: usernamecontroller.text,
-                                    password: passwordController.text))
-                            .whenComplete(() {
-                          if (state.props.isNotEmpty) {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                NavRoutes.productListroute, (route) => false);
-                          }
-                        });
+                                    password: passwordController.text));
+
+                        if (state.props.isNotEmpty) {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              NavRoutes.productListroute, (route) => false);
+                        } else {
+                          showflutterToast("Invalid credentials");
+                        }
                       },
-                      label: 'Sign in'),
-                  const SizedBox(height: 16),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, NavRoutes.signuproute);
-                    },
-                    child: const Text('Sign Up'),
-                  ),
-                ],
-              );
-            }
-          },
-        ),
-      ),
+                      label: 'Sign in');
+                },
+              ),
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, NavRoutes.signuproute);
+                },
+                child: const Text('Sign Up'),
+              ),
+            ],
+          )),
     );
   }
 
