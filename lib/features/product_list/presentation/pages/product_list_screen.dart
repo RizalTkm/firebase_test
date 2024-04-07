@@ -20,15 +20,12 @@ class ProductListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: ElevatedButton.icon(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed(NavRoutes.prouctCreateroute);
         },
-        icon: const Icon(Icons.add),
-        label: const Text("Add product"),
-        style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50))),
+        child: const Icon(Icons.add),
+        elevation: 10,
       ),
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(50),
