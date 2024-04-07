@@ -126,6 +126,7 @@ class SignUpscreen extends StatelessWidget {
       showflutterToast('Please enter password ');
       return;
     }
+
     if (passwordController.text != confirmpasswordcontroller.text) {
       showflutterToast('Password does not match');
       return;
