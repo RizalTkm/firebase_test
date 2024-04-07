@@ -33,32 +33,22 @@ class SignUpscreen extends StatelessWidget {
         child: BlocConsumer<CredentialCubit, CredentialState>(
           listener: (context, state) {
             if (state is CredentialSuccesstate) {
-
-              showflutterToast("User registration successful");
-              Future.delayed(
-                  const Duration(seconds: 1),
-                  () => Navigator.of(context).pushNamedAndRemoveUntil(
-                      NavRoutes.loginroute, (route) => false));
+              Future.delayed(const Duration(seconds: 1), () {
+                showflutterToast("User registration successful");
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    NavRoutes.loginroute, (route) => false);
+              });
             } else if (state is CredentialFailure) {
-              showflutterToast('Invalid username of password');
+              showflutterToast('Invalid username or password');
             }
           },
           builder: (context, credstate) {
             if (credstate is CredentialLoading) {
               return const CircularProgressIndicator();
             }
-            if (credstate is CredentialSuccesstate) {
-              BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, authstate) {
-                  if (authstate is AuthenticatedState) {
-                    return ProductListScreen(
-                      uid: authstate.uid,
-                    );
-                  } else {
-                    return _signupForm(context);
-                  }
-                },
-              );
+            if (credstate is CredentialFailure ||
+                credstate is CredentialInitial) {
+              return _signupForm(context);
             }
             return _signupForm(context);
           },
@@ -74,6 +64,7 @@ class SignUpscreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextFormField(
+          keyboardType: TextInputType.emailAddress,
           controller: usernamecontroller,
           decoration: const InputDecoration(labelText: 'User name'),
         ),
@@ -140,7 +131,9 @@ class SignUpscreen extends StatelessWidget {
             password: passwordController.text));
   }
 
-  showflutterToast(String message,) async {
+  showflutterToast(
+    String message,
+  ) async {
     await Fluttertoast.showToast(msg: message, textColor: Colors.red);
   }
 }
