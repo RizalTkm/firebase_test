@@ -10,7 +10,10 @@ import 'package:firesbase_test/features/login/domain/usecases/signup_usecase.dar
 part 'credential_state.dart';
 
 class CredentialCubit extends Cubit<CredentialState> {
-  CredentialCubit({ required this.getCurrentUidUseCase, required this.loginUsecase, required this.signUpUseCase})
+  CredentialCubit(
+      {required this.getCurrentUidUseCase,
+      required this.loginUsecase,
+      required this.signUpUseCase})
       : super(CredentialInitial());
 
   final LoginUsecase loginUsecase;
@@ -18,7 +21,6 @@ class CredentialCubit extends Cubit<CredentialState> {
   final GetCurrentUidUseCase getCurrentUidUseCase;
 
   Future<void> submitSignUp({required LoginEntity usercred}) async {
-
     emit(CredentialLoading());
     try {
       signUpUseCase.signup(usercred);
@@ -31,15 +33,14 @@ class CredentialCubit extends Cubit<CredentialState> {
   }
 
   Future<void> submitSignin({required LoginEntity usercred}) async {
-
     emit(CredentialLoading());
     try {
-      loginUsecase.signIn(loginEntity: usercred);
-      final uid = await getCurrentUidUseCase.getCurrentUid();
-      if(uid.isEmpty){
+      final cred = await loginUsecase.signIn(loginEntity: usercred);
+      if (cred != null) {
+        emit(CredentialSuccesstate());
+      } else {
         emit(CredentialFailure());
-      } else {CredentialSuccesstate;}
-      
+      }
     } on SocketException catch (_) {
       emit(CredentialFailure());
     } catch (_) {

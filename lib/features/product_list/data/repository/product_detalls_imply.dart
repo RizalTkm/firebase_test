@@ -6,29 +6,32 @@ import 'package:firesbase_test/features/product_list/data/models/product_model.d
 
 import 'package:firesbase_test/features/product_list/domain/repository/product_repository.dart';
 
-
-
 class ProductRepoImply extends ProductRepository {
   @override
-  Stream<List<ProductDetailsModel>> getProductList() async* {
+  Stream<QuerySnapshot> getProductList() async* {
     final firbaseinstance = FirebaseFirestore.instance;
-    final productCOllectionRef = firbaseinstance.collection('Products');
+    final productCOllection = firbaseinstance
+        .collection('Products')
+        .orderBy("productname")
+        .startAt(["rizal"]).endAt(["rizal" + "\uf8ff"]).snapshots();
 
     // yield* productCOllectionRef.snapshots().map<ProductDetailsModel>((querySnapshot) {});
+    yield* productCOllection;
   }
 
   @override
   Future submitNewProduct(
-      ProductDetailsModel   productDetailsModel,) async {
+    ProductDetailsModel productDetailsModel,
+  ) async {
     final firbaseinstance = FirebaseFirestore.instance;
 
-   final productCOllectionRef = firbaseinstance.collection('Products');
+    final productCOllectionRef = firbaseinstance.collection('Products');
 
     // final imageurls = await  Future.wait(imagefiles.map((image)  {
     //   return uploadImageTofirebase(image);
     // }).toList());
 
-   await  productCOllectionRef.add(productDetailsModel.todocument());
+    await productCOllectionRef.add(productDetailsModel.todocument());
   }
 
   @override

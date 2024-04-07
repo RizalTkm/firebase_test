@@ -1,3 +1,4 @@
+import 'package:firesbase_test/config/routes/routenames.dart';
 import 'package:firesbase_test/features/login/presentation/page/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +18,8 @@ class CustomappbarWidget extends StatelessWidget {
       child: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
           if (state is UnauthenticatedState) {
-            return LoginScreen();
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(NavRoutes.loginroute, (route) => true);
           }
           return AppBar(
             title: Center(child: Text(title)),

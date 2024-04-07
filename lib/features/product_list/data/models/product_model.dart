@@ -9,12 +9,13 @@ class ProductDetailsModel extends ProductDetailsEntity {
       required super.price,
       required super.imageUrls});
 
-  factory ProductDetailsModel.fromsnapshot(DocumentSnapshot snapshot) {
+  factory ProductDetailsModel.fromsnapshot(
+      QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
     return ProductDetailsModel(
         productname: snapshot.get('productname'),
         measurement: snapshot.get('measurement'),
         price: snapshot.get('price'),
-        imageUrls : snapshot.get('imageurls'));
+        imageUrls: snapshot.get('imageurls'));
   }
 
   Map<String, dynamic> todocument() {
@@ -22,10 +23,7 @@ class ProductDetailsModel extends ProductDetailsEntity {
       "productname": productname,
       "measurement": measurement,
       "price": price,
-      "imageurls":imageUrls
+      "imageurls": imageUrls
     };
   }
-
-
-  
 }
