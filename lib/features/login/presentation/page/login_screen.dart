@@ -61,27 +61,29 @@ class LoginScreen extends StatelessWidget {
               );
             }),
         const SizedBox(height: 24),
-        SignInButton(
-            label: 'Sign in',
-            onpressed: () {
-              if (usernamecontroller.text.isEmpty) {
-                showflutterToast('Please enter username');
-                return;
-              }
-              if (passwordController.text.isEmpty) {
-                showflutterToast('Please enter password ');
-                return;
-              }
-              BlocProvider.of<CredentialCubit>(context).submitSignin(
-                  usercred: LoginEntity(
-                      username: usernamecontroller.text,
-                      password: passwordController.text));
-
-              Future.delayed(Duration(seconds: 2), () {
+        BlocConsumer<CredentialCubit, CredentialState>(
+          listener: (context, state) {
+            if (state is CredentialSuccesstate) {
+              Future.delayed(Duration(seconds: 1), () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                    NavRoutes.productListroute, (route) => true);
+                    NavRoutes.productListroute, (route) => false);
               });
-            }),
+            }
+            if (state is CredentialFailure) {
+              showflutterToast("Invalid Credential");
+            }
+          },
+          builder: (context, state) {
+            if (state is CredentialLoading) {
+              return CircularProgressIndicator();
+            }
+            if (state is CredentialFailure || state is CredentialInitial) {
+              return signButtonWidget(context);
+            } else {
+              return signButtonWidget(context);
+            }
+          },
+        ),
         const SizedBox(height: 16),
         TextButton(
           onPressed: () {
@@ -91,5 +93,24 @@ class LoginScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget signButtonWidget(BuildContext context) {
+    return SignInButton(
+        label: 'Sign in',
+        onpressed: () {
+          if (usernamecontroller.text.isEmpty) {
+            showflutterToast('Please enter username');
+            return;
+          }
+          if (passwordController.text.isEmpty) {
+            showflutterToast('Please enter password ');
+            return;
+          }
+          BlocProvider.of<CredentialCubit>(context).submitSignin(
+              usercred: LoginEntity(
+                  username: usernamecontroller.text,
+                  password: passwordController.text));
+        });
   }
 }

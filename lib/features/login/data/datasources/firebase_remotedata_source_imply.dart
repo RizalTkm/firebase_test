@@ -12,10 +12,8 @@ class FirebaseRDataSourceImply implements FirebaseRemoteDataSource {
 
   @override
   Future<dynamic> signinUser({required LoginEntity userCred}) async {
-    final cred = await auth.signInWithEmailAndPassword(
+    await auth.signInWithEmailAndPassword(
         email: userCred.username!, password: userCred.password!);
-
-    return cred.credential!.token;
   }
 
   @override

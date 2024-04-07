@@ -33,14 +33,17 @@ class SignUpscreen extends StatelessWidget {
         child: BlocConsumer<CredentialCubit, CredentialState>(
           listener: (context, state) {
             if (state is CredentialSuccesstate) {
-              BlocProvider.of<AuthCubit>(context).loggedIn();
+              Future.delayed(
+                  const Duration(seconds: 1),
+                  () => Navigator.of(context).pushNamedAndRemoveUntil(
+                      NavRoutes.loginroute, (route) => false));
             } else if (state is CredentialFailure) {
               showflutterToast('Invalid username of password');
             }
           },
           builder: (context, credstate) {
             if (credstate is CredentialLoading) {
-              return const CircularProgressIndicatorWidget();
+              return const CircularProgressIndicator();
             }
             if (credstate is CredentialSuccesstate) {
               BlocBuilder<AuthCubit, AuthState>(
@@ -132,25 +135,6 @@ class SignUpscreen extends StatelessWidget {
         usercred: loginModel(
             username: usernamecontroller.text,
             password: passwordController.text));
-
-    BlocProvider.of<AuthCubit>(context).loggedIn().then((value) {
-      if (value) {
-        // showflutterToast("user registration successfull");
-        Flushbar(
-          message: "user registration successfull",
-          backgroundColor: Colors.green,
-        );
-        Future.delayed(
-            Duration(seconds: 2),
-            () => Navigator.of(context).pushNamedAndRemoveUntil(
-                NavRoutes.loginroute, (route) => false));
-      } else {
-        Flushbar(
-          message: "user registration failed",
-          backgroundColor: Colors.red,
-        );
-      }
-    });
   }
 
   showflutterToast(String message) async {
