@@ -24,7 +24,7 @@ class CredentialCubit extends Cubit<CredentialState> {
     emit(CredentialLoading());
     try {
       signUpUseCase.signup(usercred);
-      emit(CredentialSuccesstate());
+      emit(CredentialSuccesstate(''));
     } on SocketException catch (_) {
       emit(CredentialFailure());
     } catch (_) {
@@ -36,11 +36,7 @@ class CredentialCubit extends Cubit<CredentialState> {
     emit(CredentialLoading());
     try {
       final cred = await loginUsecase.signIn(loginEntity: usercred);
-      if (cred != null) {
-        emit(CredentialSuccesstate());
-      } else {
-        emit(CredentialFailure());
-      }
+        emit(CredentialSuccesstate(cred));
     } on SocketException catch (_) {
       emit(CredentialFailure());
     } catch (_) {
