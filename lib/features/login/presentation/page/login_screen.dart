@@ -24,38 +24,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Sign in')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: BlocConsumer<CredentialCubit, CredentialState>(
-          listener: (context,state){
-             if(state is CredentialSuccesstate){
-              BlocProvider.of<AuthCubit>(context).loggedIn();
-             } 
-
-             if(state is CredentialFailure){
-              showflutterToast("Invalid credental");
-             }
-            
-          },
-          builder: (context, state) {
-            if (state is CredentialLoading) {
-              return const CircularProgressIndicatorWidget();
-            } 
-            if(state is CredentialSuccesstate){
-              return BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, state) {
-                  if(state is AuthenticatedState){
-                    return ProductListScreen();
-                  }else{
-                    return BuildSignPage(context);
-                  }
-                },
-              );
-            }
-
-            return BuildSignPage(context);
-          },
-        ),
-      ),
+          padding: const EdgeInsets.all(16.0), child: BuildSignPage(context)),
     );
   }
 
@@ -65,67 +34,62 @@ class LoginScreen extends StatelessWidget {
     await Fluttertoast.showToast(msg: message, textColor: Colors.red);
   }
 
-
-  Widget BuildSignPage( BuildContext context){
-
+  Widget BuildSignPage(BuildContext context) {
     return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextFormField(
-                    controller: usernamecontroller,
-                    decoration: const InputDecoration(labelText: 'User name'),
-                  ),
-                  const SizedBox(height: 16),
-                  ValueListenableBuilder(
-                      valueListenable: isobscurepassword,
-                      builder: (context, value, child) {
-                        return TextFormField(
-                          controller: passwordController,
-                          obscureText: isobscurepassword.value,
-                          decoration: InputDecoration(
-                              labelText: 'Password',
-                              suffixIcon: InkWell(
-                                  onTap: () {
-                                    isobscurepassword.value =
-                                        !isobscurepassword.value;
-                                  },
-                                  child: isobscurepassword.value
-                                      ? Icon(Icons.visibility_sharp)
-                                      : Icon(Icons.visibility_off))),
-                        );
-                      }),
-                  const SizedBox(height: 24),
-                  SignInButton( label: 'Sign in',
-                      onpressed: () async {
-                        if (usernamecontroller.text.isEmpty) {
-                          showflutterToast('Please enter username');
-                          return;
-                        }
-                        if (passwordController.text.isEmpty) {
-                          showflutterToast('Please enter password ');
-                          return;
-                        }
-                        await BlocProvider.of<CredentialCubit>(context)
-                            .submitSignin(
-                                usercred: LoginEntity(
-                                    username: usernamecontroller.text,
-                                    password: passwordController.text));
-
-                                      
-
-                                      Navigator.of(context).pushNamedAndRemoveUntil(NavRoutes.productListroute, (route) => false);
-                                      
-                                    
-                      }),
-                      
-                  const SizedBox(height: 16),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, NavRoutes.signuproute);
-                    },
-                    child: const Text('Sign Up'),
-                  ),
-                ],
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextFormField(
+          controller: usernamecontroller,
+          decoration: const InputDecoration(labelText: 'User name'),
+        ),
+        const SizedBox(height: 16),
+        ValueListenableBuilder(
+            valueListenable: isobscurepassword,
+            builder: (context, value, child) {
+              return TextFormField(
+                controller: passwordController,
+                obscureText: isobscurepassword.value,
+                decoration: InputDecoration(
+                    labelText: 'Password',
+                    suffixIcon: InkWell(
+                        onTap: () {
+                          isobscurepassword.value = !isobscurepassword.value;
+                        },
+                        child: isobscurepassword.value
+                            ? Icon(Icons.visibility_sharp)
+                            : Icon(Icons.visibility_off))),
               );
+            }),
+        const SizedBox(height: 24),
+        SignInButton(
+            label: 'Sign in',
+            onpressed: () {
+              if (usernamecontroller.text.isEmpty) {
+                showflutterToast('Please enter username');
+                return;
+              }
+              if (passwordController.text.isEmpty) {
+                showflutterToast('Please enter password ');
+                return;
+              }
+              BlocProvider.of<CredentialCubit>(context).submitSignin(
+                  usercred: LoginEntity(
+                      username: usernamecontroller.text,
+                      password: passwordController.text));
+
+              Future.delayed(Duration(seconds: 2), () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    NavRoutes.productListroute, (route) => true);
+              });
+            }),
+        const SizedBox(height: 16),
+        TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, NavRoutes.signuproute);
+          },
+          child: const Text('Sign Up'),
+        ),
+      ],
+    );
   }
 }

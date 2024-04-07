@@ -1,5 +1,4 @@
 import 'package:firesbase_test/config/routes/routenames.dart';
-import 'package:firesbase_test/features/login/presentation/page/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,28 +13,21 @@ class CustomappbarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(60),
-      child: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) {
-          if (state is UnauthenticatedState) {
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil(NavRoutes.loginroute, (route) => true);
-          }
-          return AppBar(
-            title: Center(child: Text(title)),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                    onTap: () {
-                      BlocProvider.of<AuthCubit>(context).SignOut();
-                    },
-                    child: const Icon(Icons.logout)),
-              )
-            ],
-          );
-        },
-      ),
-    );
+        preferredSize: const Size.fromHeight(60),
+        child: AppBar(
+          title: Center(child: Text(title)),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                  onTap: () {
+                    BlocProvider.of<AuthCubit>(context).SignOut();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        NavRoutes.loginroute, (route) => false);
+                  },
+                  child: const Icon(Icons.logout)),
+            )
+          ],
+        ));
   }
 }
