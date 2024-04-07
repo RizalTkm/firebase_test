@@ -10,15 +10,20 @@ class ProductQrWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(preferredSize: Size.fromHeight(50), child: CustomappbarWidget(title: "QR code")),
+      appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: CustomappbarWidget(title: "QR code")),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-          const  Padding(
-             padding:  EdgeInsets.all(8.0),
-             child:   Text("Please scan the QR code for Product Detais"),
-           ), 
-            Card(elevation: 10,
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Please scan the QR code for Product Detais"),
+            ),
+            Card(
+              elevation: 10,
               child: QrImageView(
                 data:
                     "${"Name :" + ' ' + snapshotdata['productname'].toString() + '\n' + "Size :" " " + snapshotdata["measurement"].toString()}\nPrice :"
