@@ -2,7 +2,6 @@ import 'package:firesbase_test/features/login/presentation/page/login_screen.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../config/routes/routenames.dart';
 import '../../../login/presentation/bloc/auth/cubit/auth_cubit.dart';
 
 class CustomappbarWidget extends StatelessWidget {
@@ -16,11 +15,9 @@ class CustomappbarWidget extends StatelessWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(60),
       child: BlocBuilder<AuthCubit, AuthState>(
-
         builder: (context, state) {
-
-          if(state is UnauthenticatedState){
-             return LoginScreen();
+          if (state is UnauthenticatedState) {
+            return LoginScreen();
           }
           return AppBar(
             title: Center(child: Text(title)),

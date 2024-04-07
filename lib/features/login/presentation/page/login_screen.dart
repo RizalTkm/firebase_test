@@ -26,23 +26,18 @@ class LoginScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: BlocBuilder<CredentialCubit, CredentialState>(
-         
           builder: (context, state) {
-
-             if(state is CredentialLoading){
+            if (state is CredentialLoading) {
               return const CircularProgressIndicatorWidget();
-             } else if ( state is CredentialSuccesstate){
-
+            } else if (state is CredentialSuccesstate) {
               showflutterToast("Logged successfully");
 
-               return ProductListScreen();
-             } else if(state is CredentialFailure){
-               
-               showflutterToast("loggin failed");
+              return ProductListScreen();
+            } else if (state is CredentialFailure) {
+              showflutterToast("loggin failed");
               return LoginScreen();
-             }
+            }
 
-             
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -91,7 +86,6 @@ class LoginScreen extends StatelessWidget {
   }
 
   Future<void> submitSign(BuildContext context) async {
-   
     if (usernamecontroller.text.isEmpty) {
       showflutterToast('Please enter username');
       return;
@@ -100,14 +94,11 @@ class LoginScreen extends StatelessWidget {
       showflutterToast('Please enter password ');
       return;
     }
-  
 
-    await BlocProvider.of<CredentialCubit>(context)
-        .submitSignin(
-            usercred: LoginEntity(
-                username: usernamecontroller.text,
-                password: passwordController.text));
-      
+    await BlocProvider.of<CredentialCubit>(context).submitSignin(
+        usercred: LoginEntity(
+            username: usernamecontroller.text,
+            password: passwordController.text));
   }
 
   showflutterToast(String message) async {
