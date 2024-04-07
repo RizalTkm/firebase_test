@@ -32,10 +32,10 @@ class LoginScreen extends StatelessWidget {
             } else if (state is CredentialSuccesstate) {
               showflutterToast("Logged successfully");
 
-              return ProductListScreen();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  NavRoutes.productListroute, (route) => true);
             } else if (state is CredentialFailure) {
               showflutterToast("loggin failed");
-              return LoginScreen();
             }
 
             return Column(

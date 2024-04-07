@@ -8,8 +8,8 @@ class FirebaseRepositoryImply implements FirebaseRepository {
   FirebaseRepositoryImply({required this.remoteDatasource});
 
   @override
-  Future<void> signinUser({required LoginEntity userCred}) async {
-    remoteDatasource.signinUser(userCred: userCred);
+  Future<dynamic> signinUser({required LoginEntity userCred}) async {
+    return await remoteDatasource.signinUser(userCred: userCred);
   }
 
   @override
@@ -19,26 +19,21 @@ class FirebaseRepositoryImply implements FirebaseRepository {
 
   @override
   Future<void> signup({required LoginEntity userCred}) async {
-   await  remoteDatasource.signup(userCred);
+    await remoteDatasource.signup(userCred);
   }
-  
+
   @override
   Future<void> getCreateCurrentUser(LoginEntity user) async {
-
     await remoteDatasource.getCreateCurrentUser(user);
-    
   }
-  
+
   @override
   Future<String> getCurrentUId() async {
-  
-    return  await remoteDatasource.getCurrentUSerId();
+    return await remoteDatasource.getCurrentUSerId();
   }
-  
+
   @override
-  Future<void> signout() async{
-    
+  Future<void> signout() async {
     await remoteDatasource.signout();
-    
   }
 }

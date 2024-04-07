@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firesbase_test/features/product_list/data/models/product_model.dart';
 import 'package:firesbase_test/features/product_list/domain/repository/product_repository.dart';
@@ -39,5 +40,9 @@ class ProductCubit extends Cubit<ProductState> {
     } catch (e) {
       emit(ProductuploadFailure());
     }
+  }
+
+  Stream<QuerySnapshot> getProductList() async* {
+    yield* productRepository.getProductList();
   }
 }
