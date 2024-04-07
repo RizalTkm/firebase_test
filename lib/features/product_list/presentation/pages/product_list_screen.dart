@@ -88,7 +88,7 @@ class ProductListScreen extends StatelessWidget {
                               return InkWell(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ProductQrWidget(
+                                    builder: (context) => const ProductQrWidget(
                                       qrdata: 'weqfqfihqef',
                                     ),
                                   ));
