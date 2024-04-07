@@ -33,6 +33,8 @@ class SignUpscreen extends StatelessWidget {
         child: BlocConsumer<CredentialCubit, CredentialState>(
           listener: (context, state) {
             if (state is CredentialSuccesstate) {
+
+              showflutterToast("User registration successful");
               Future.delayed(
                   const Duration(seconds: 1),
                   () => Navigator.of(context).pushNamedAndRemoveUntil(
@@ -138,7 +140,7 @@ class SignUpscreen extends StatelessWidget {
             password: passwordController.text));
   }
 
-  showflutterToast(String message) async {
+  showflutterToast(String message,) async {
     await Fluttertoast.showToast(msg: message, textColor: Colors.red);
   }
 }
