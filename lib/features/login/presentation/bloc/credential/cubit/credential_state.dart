@@ -10,8 +10,11 @@ final class CredentialInitial extends CredentialState {
 }
 
 final class CredentialSuccesstate extends CredentialState {
+
+  final uid ;
+  CredentialSuccesstate(this.uid);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [uid];
 }
 
 final class CredentialFailure extends CredentialState {

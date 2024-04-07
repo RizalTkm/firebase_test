@@ -29,77 +29,74 @@ class LoginScreen extends StatelessWidget {
           builder: (context, state) {
             if (state is CredentialLoading) {
               return const CircularProgressIndicatorWidget();
-            } else if (state is CredentialSuccesstate) {
-              showflutterToast("Logged successfully");
+            } else {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextFormField(
+                    controller: usernamecontroller,
+                    decoration: const InputDecoration(labelText: 'User name'),
+                  ),
+                  const SizedBox(height: 16),
+                  ValueListenableBuilder(
+                      valueListenable: isobscurepassword,
+                      builder: (context, value, child) {
+                        return TextFormField(
+                          controller: passwordController,
+                          obscureText: isobscurepassword.value,
+                          decoration: InputDecoration(
+                              labelText: 'Password',
+                              suffixIcon: InkWell(
+                                  onTap: () {
+                                    isobscurepassword.value =
+                                        !isobscurepassword.value;
+                                  },
+                                  child: isobscurepassword.value
+                                      ? Icon(Icons.visibility_sharp)
+                                      : Icon(Icons.visibility_off))),
+                        );
+                      }),
+                  const SizedBox(height: 24),
+                  SignInButton(
+                      onpressed: () async {
+                        if (usernamecontroller.text.isEmpty) {
+                          showflutterToast('Please enter username');
+                          return;
+                        }
+                        if (passwordController.text.isEmpty) {
+                          showflutterToast('Please enter password ');
+                          return;
+                        }
+                        await BlocProvider.of<CredentialCubit>(context)
+                            .submitSignin(
+                                usercred: LoginEntity(
+                                    username: usernamecontroller.text,
+                                    password: passwordController.text)).whenComplete(() {
 
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  NavRoutes.productListroute, (route) => true);
-            } else if (state is CredentialFailure) {
-              showflutterToast("loggin failed");
-            }
+                                      if(state.props.isNotEmpty){
 
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextFormField(
-                  controller: usernamecontroller,
-                  decoration: const InputDecoration(labelText: 'User name'),
-                ),
-                const SizedBox(height: 16),
-                ValueListenableBuilder(
-                    valueListenable: isobscurepassword,
-                    builder: (context, value, child) {
-                      return TextFormField(
-                        controller: passwordController,
-                        obscureText: isobscurepassword.value,
-                        decoration: InputDecoration(
-                            labelText: 'Password',
-                            suffixIcon: InkWell(
-                                onTap: () {
-                                  isobscurepassword.value =
-                                      !isobscurepassword.value;
-                                },
-                                child: isobscurepassword.value
-                                    ? Icon(Icons.visibility_sharp)
-                                    : Icon(Icons.visibility_off))),
-                      );
-                    }),
-                const SizedBox(height: 24),
-                SignInButton(
-                    onpressed: () {
-                      submitSign(context);
+                                      Navigator.of(context).pushNamedAndRemoveUntil(NavRoutes.productListroute, (route) => false);
+                                      }
+                                    });
+                      },
+                      label: 'Sign in'),
+                  const SizedBox(height: 16),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, NavRoutes.signuproute);
                     },
-                    label: 'Sign in'),
-                const SizedBox(height: 16),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, NavRoutes.signuproute);
-                  },
-                  child: const Text('Sign Up'),
-                ),
-              ],
-            );
+                    child: const Text('Sign Up'),
+                  ),
+                ],
+              );
+            }
           },
         ),
       ),
     );
   }
 
-  Future<void> submitSign(BuildContext context) async {
-    if (usernamecontroller.text.isEmpty) {
-      showflutterToast('Please enter username');
-      return;
-    }
-    if (passwordController.text.isEmpty) {
-      showflutterToast('Please enter password ');
-      return;
-    }
-
-    await BlocProvider.of<CredentialCubit>(context).submitSignin(
-        usercred: LoginEntity(
-            username: usernamecontroller.text,
-            password: passwordController.text));
-  }
+  Future<void> submitSign(BuildContext context, uid) async {}
 
   showflutterToast(String message) async {
     await Fluttertoast.showToast(msg: message, textColor: Colors.red);

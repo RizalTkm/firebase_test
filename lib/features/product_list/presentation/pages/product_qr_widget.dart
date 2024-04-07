@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ProductQrWidget extends StatelessWidget {
-   const ProductQrWidget({super.key,  this.snapshotdata});
+   const   ProductQrWidget({super.key,  this.snapshotdata});
 
   final dynamic snapshotdata  ;
   
