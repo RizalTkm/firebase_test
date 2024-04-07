@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                         );
                       }),
                   const SizedBox(height: 24),
-                  SignInButton(
+                  SignInButton( label: 'Sign in',
                       onpressed: () async {
                         if (usernamecontroller.text.isEmpty) {
                           showflutterToast('Please enter username');
@@ -109,15 +109,15 @@ class LoginScreen extends StatelessWidget {
                             .submitSignin(
                                 usercred: LoginEntity(
                                     username: usernamecontroller.text,
-                                    password: passwordController.text)).whenComplete(() {
+                                    password: passwordController.text));
 
                                       
 
                                       Navigator.of(context).pushNamedAndRemoveUntil(NavRoutes.productListroute, (route) => false);
                                       
-                                    });
-                      },
-                      label: 'Sign in'),
+                                    
+                      }),
+                      
                   const SizedBox(height: 16),
                   TextButton(
                     onPressed: () {
