@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firesbase_test/config/routes/routenames.dart';
 import 'package:firesbase_test/features/login/presentation/widgets/circularprogressIndicator.dart';
+import 'package:firesbase_test/features/product_list/presentation/pages/product_qr_widget.dart';
 
 import 'package:firesbase_test/features/product_list/presentation/widgets/productcard.dart';
 import 'package:flutter/material.dart';
@@ -84,17 +85,27 @@ class ProductListScreen extends StatelessWidget {
                                 ScrollViewKeyboardDismissBehavior.onDrag,
                             itemCount: productitems.length,
                             itemBuilder: (context, index) {
-                              return ProductTile(
-                                  productName: productitems[index]
-                                          ['productname']
-                                      .toString(),
-                                  ProductPrice:
-                                      productitems[index]["price"].toString(),
-                                  productsize: productitems[index]
-                                          ["measurement"]
-                                      .toString(),
-                                  imageUrl: productitems[index]["imageurls"][0]
-                                      .toString());
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ProductQrWidget(
+                                      qrdata: 'weqfqfihqef',
+                                    ),
+                                  ));
+                                },
+                                child: ProductTile(
+                                    productName: productitems[index]
+                                            ['productname']
+                                        .toString(),
+                                    ProductPrice:
+                                        productitems[index]["price"].toString(),
+                                    productsize: productitems[index]
+                                            ["measurement"]
+                                        .toString(),
+                                    imageUrl: productitems[index]["imageurls"]
+                                            [0]
+                                        .toString()),
+                              );
                             },
                           ),
                         ),

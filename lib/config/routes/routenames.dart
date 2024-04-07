@@ -4,5 +4,6 @@ class NavRoutes{
   static const signuproute = '/signup';
   static const productListroute = '/productList';
   static const prouctCreateroute = '/productCreate';
+  static const productqrcode = '/productqrcode';
   
 }

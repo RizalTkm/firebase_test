@@ -8,6 +8,7 @@ import 'package:firesbase_test/features/product_list/presentation/bloc/cubit/ima
 import 'package:firesbase_test/features/product_list/presentation/bloc/cubit/product_cubit.dart';
 import 'package:firesbase_test/features/product_list/presentation/pages/product_creation_page.dart';
 import 'package:firesbase_test/features/product_list/presentation/pages/product_list_screen.dart';
+import 'package:firesbase_test/features/product_list/presentation/pages/product_qr_widget.dart';
 import 'package:firesbase_test/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,7 +44,8 @@ class MainApp extends StatelessWidget {
             '/productList': (context) =>  ProductListScreen(),
             '/login': (context) =>  LoginScreen(),
             '/signup':(context)=>  SignUpscreen(),
-            '/productCreate':(context)=>  ProductCreationScreen()
+            '/productCreate':(context)=>  ProductCreationScreen(),
+            '/productqrcode':(context) => const ProductQrWidget()
           },
           home: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
